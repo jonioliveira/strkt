@@ -1,8 +1,5 @@
 {
   "buildCommand": "pnpm build",
   "installCommand": "pnpm install",
-  "framework": null,
-  "env": {
-    "NITRO_PRESET": "vercel"
-  }
+  "framework": null
 }
