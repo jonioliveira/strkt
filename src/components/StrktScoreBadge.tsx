@@ -7,7 +7,7 @@ interface StrktScoreBadgeProps {
 }
 
 const SIZE_MAP = {
-  sm: { outer: "w-10 h-10", text: "text-xs", ring: 3 },
+  sm: { outer: "w-10 h-10", text: "text-sm", ring: 3 },
   md: { outer: "w-14 h-14", text: "text-base", ring: 4 },
   lg: { outer: "w-20 h-20", text: "text-2xl", ring: 5 },
 }
@@ -54,7 +54,9 @@ export function StrktScoreBadge({ score, size = "md", className }: StrktScoreBad
         <span className={cn("font-display font-black", cfg.text)} style={{ color }}>
           {clamped}
         </span>
-        <span className="text-[10px] font-mono text-[#7a7a88] uppercase tracking-widest leading-none">strkt</span>
+        {size !== "sm" && (
+          <span className="text-[10px] font-mono text-[#7a7a88] uppercase tracking-widest leading-none">strkt</span>
+        )}
       </div>
     </div>
   )
