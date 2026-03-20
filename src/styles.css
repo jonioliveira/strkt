@@ -1,0 +1,103 @@
+@import url("https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@700;900&family=DM+Sans:wght@400;500&family=Space+Mono&display=swap");
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: "DM Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Barlow Condensed", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "Space Mono", ui-monospace, monospace;
+
+  --color-bg: #080809;
+  --color-surface: #111114;
+  --color-surface2: #1a1a1f;
+  --color-border: #2a2a30;
+  --color-accent: #C8FF47;
+  --color-accent2: #FF6B2B;
+  --color-text: #F0F0F2;
+  --color-muted: #7a7a88;
+  --color-card: #14141a;
+}
+
+:root {
+  --background: 9 9 10;
+  --foreground: 240 240 242;
+  --card: 20 20 26;
+  --card-foreground: 240 240 242;
+  --popover: 17 17 20;
+  --popover-foreground: 240 240 242;
+  --primary: 200 255 71;
+  --primary-foreground: 8 8 9;
+  --secondary: 26 26 31;
+  --secondary-foreground: 240 240 242;
+  --muted: 26 26 31;
+  --muted-foreground: 122 122 136;
+  --accent: 26 26 31;
+  --accent-foreground: 240 240 242;
+  --destructive: 239 68 68;
+  --destructive-foreground: 240 240 242;
+  --border: 42 42 48;
+  --input: 26 26 31;
+  --ring: 200 255 71;
+  --radius: 0.5rem;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html, body, #app {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  color: #F0F0F2;
+  font-family: var(--font-sans);
+  background-color: #080809;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  background:
+    radial-gradient(ellipse 800px 500px at 15% 0%, rgba(200, 255, 71, 0.10), transparent 60%),
+    radial-gradient(ellipse 600px 400px at 85% 100%, rgba(255, 107, 43, 0.08), transparent 60%);
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.06;
+  background-image:
+    linear-gradient(rgba(200, 255, 71, 0.3) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 255, 71, 0.3) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse at 50% 0%, black, transparent 70%);
+}
+
+.page-wrap {
+  width: min(1200px, calc(100% - 2rem));
+  margin-inline: auto;
+}
+
+@keyframes ticker {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+.ticker-track {
+  animation: ticker 22s linear infinite;
+}
+
+.ticker-track:hover {
+  animation-play-state: paused;
+}
