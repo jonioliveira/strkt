@@ -1,9 +1,9 @@
-import postgres from "postgres"
-import { drizzle } from "drizzle-orm/postgres-js"
+import { neon } from "@neondatabase/serverless"
+import { drizzle } from "drizzle-orm/neon-http"
 import * as schema from "./schema"
 
-const client = postgres(process.env.DATABASE_URL!)
-const db = drizzle(client, { schema })
+const sql = neon(process.env.DATABASE_URL!)
+const db = drizzle(sql, { schema })
 
 // Fixed UUIDs for deterministic seeding
 // RFC 4122 v4-compliant: version nibble = 4, variant nibble = 8
@@ -46,7 +46,7 @@ async function seed() {
   console.log("🌱 Seeding database...")
 
   // Truncate in FK-safe order
-  await client`TRUNCATE sponsorship_events, sponsorships, athlete_results, athlete_reach_snapshots, athletes, sponsors, verification, account, session, "user" RESTART IDENTITY CASCADE`
+  await sql`TRUNCATE sponsorship_events, sponsorships, athlete_results, athlete_reach_snapshots, athletes, sponsors, verification, account, session, "user" RESTART IDENTITY CASCADE`
   console.log("  ✓ Truncated")
 
   // ── Users (Better Auth uses text PKs) ──────────────────────────────────────
