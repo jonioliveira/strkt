@@ -8,6 +8,13 @@
       "when": 1773863536712,
       "tag": "0000_fancy_scarlet_witch",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1742515200000,
+      "tag": "0001_social_connections",
+      "breakpoints": true
     }
   ]
 }

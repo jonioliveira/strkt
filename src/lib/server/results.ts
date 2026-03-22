@@ -1,5 +1,5 @@
 import { createServerFn } from "@tanstack/react-start"
-import { getWebRequest } from "@tanstack/react-start/server"
+import { getRequest } from "@tanstack/react-start/server"
 import { db } from "#/db"
 import { athleteResults, athletes } from "#/db/schema"
 import { eq, desc, count } from "drizzle-orm"
@@ -132,7 +132,7 @@ const resultFieldsSchema = z.object({
 export const updateResult = createServerFn({ method: "POST" })
   .inputValidator(z.object({ id: z.string().uuid() }).merge(resultFieldsSchema))
   .handler(async ({ data }) => {
-    const session = await auth.api.getSession({ headers: getWebRequest()!.headers })
+    const session = await auth.api.getSession({ headers: getRequest().headers })
     if (!session) throw new Error("Não autenticado.")
 
     const { id, ...fields } = data
@@ -160,7 +160,7 @@ export const updateResult = createServerFn({ method: "POST" })
 export const deleteResult = createServerFn({ method: "POST" })
   .inputValidator(z.object({ id: z.string().uuid() }))
   .handler(async ({ data }) => {
-    const session = await auth.api.getSession({ headers: getWebRequest()!.headers })
+    const session = await auth.api.getSession({ headers: getRequest().headers })
     if (!session) throw new Error("Não autenticado.")
 
     const athleteId = await assertResultOwnership(data.id, session.user.id)
