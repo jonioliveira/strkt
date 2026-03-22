@@ -23,6 +23,7 @@ import { Route as DashboardSponsorAthletesRouteImport } from './routes/dashboard
 import { Route as DashboardAthleteResultsRouteImport } from './routes/dashboard/athlete/results'
 import { Route as DashboardAthleteReachRouteImport } from './routes/dashboard/athlete/reach'
 import { Route as DashboardAthleteProfileRouteImport } from './routes/dashboard/athlete/profile'
+import { Route as DashboardAthleteConnectionsRouteImport } from './routes/dashboard/athlete/connections'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const AboutRoute = AboutRouteImport.update({
@@ -97,6 +98,12 @@ const DashboardAthleteProfileRoute = DashboardAthleteProfileRouteImport.update({
   path: '/dashboard/athlete/profile',
   getParentRoute: () => rootRouteImport,
 } as any)
+const DashboardAthleteConnectionsRoute =
+  DashboardAthleteConnectionsRouteImport.update({
+    id: '/dashboard/athlete/connections',
+    path: '/dashboard/athlete/connections',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -114,6 +121,7 @@ export interface FileRoutesByFullPath {
   '/dashboard/athlete/profile': typeof DashboardAthleteProfileRoute
   '/dashboard/athlete/reach': typeof DashboardAthleteReachRoute
   '/dashboard/athlete/results': typeof DashboardAthleteResultsRoute
+  '/dashboard/athlete/connections': typeof DashboardAthleteConnectionsRoute
   '/dashboard/sponsor/athletes': typeof DashboardSponsorAthletesRoute
   '/dashboard/sponsor/discover': typeof DashboardSponsorDiscoverRoute
   '/dashboard/admin/': typeof DashboardAdminIndexRoute
@@ -131,6 +139,7 @@ export interface FileRoutesByTo {
   '/dashboard/athlete/profile': typeof DashboardAthleteProfileRoute
   '/dashboard/athlete/reach': typeof DashboardAthleteReachRoute
   '/dashboard/athlete/results': typeof DashboardAthleteResultsRoute
+  '/dashboard/athlete/connections': typeof DashboardAthleteConnectionsRoute
   '/dashboard/sponsor/athletes': typeof DashboardSponsorAthletesRoute
   '/dashboard/sponsor/discover': typeof DashboardSponsorDiscoverRoute
   '/dashboard/admin': typeof DashboardAdminIndexRoute
@@ -149,6 +158,7 @@ export interface FileRoutesById {
   '/dashboard/athlete/profile': typeof DashboardAthleteProfileRoute
   '/dashboard/athlete/reach': typeof DashboardAthleteReachRoute
   '/dashboard/athlete/results': typeof DashboardAthleteResultsRoute
+  '/dashboard/athlete/connections': typeof DashboardAthleteConnectionsRoute
   '/dashboard/sponsor/athletes': typeof DashboardSponsorAthletesRoute
   '/dashboard/sponsor/discover': typeof DashboardSponsorDiscoverRoute
   '/dashboard/admin/': typeof DashboardAdminIndexRoute
@@ -168,6 +178,7 @@ export interface FileRouteTypes {
     | '/dashboard/athlete/profile'
     | '/dashboard/athlete/reach'
     | '/dashboard/athlete/results'
+    | '/dashboard/athlete/connections'
     | '/dashboard/sponsor/athletes'
     | '/dashboard/sponsor/discover'
     | '/dashboard/admin/'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/dashboard/athlete/profile'
     | '/dashboard/athlete/reach'
     | '/dashboard/athlete/results'
+    | '/dashboard/athlete/connections'
     | '/dashboard/sponsor/athletes'
     | '/dashboard/sponsor/discover'
     | '/dashboard/admin'
@@ -202,6 +214,7 @@ export interface FileRouteTypes {
     | '/dashboard/athlete/profile'
     | '/dashboard/athlete/reach'
     | '/dashboard/athlete/results'
+    | '/dashboard/athlete/connections'
     | '/dashboard/sponsor/athletes'
     | '/dashboard/sponsor/discover'
     | '/dashboard/admin/'
@@ -220,6 +233,7 @@ export interface RootRouteChildren {
   DashboardAthleteProfileRoute: typeof DashboardAthleteProfileRoute
   DashboardAthleteReachRoute: typeof DashboardAthleteReachRoute
   DashboardAthleteResultsRoute: typeof DashboardAthleteResultsRoute
+  DashboardAthleteConnectionsRoute: typeof DashboardAthleteConnectionsRoute
   DashboardSponsorAthletesRoute: typeof DashboardSponsorAthletesRoute
   DashboardSponsorDiscoverRoute: typeof DashboardSponsorDiscoverRoute
   DashboardAdminIndexRoute: typeof DashboardAdminIndexRoute
@@ -327,6 +341,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DashboardAthleteProfileRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/dashboard/athlete/connections': {
+      id: '/dashboard/athlete/connections'
+      path: '/dashboard/athlete/connections'
+      fullPath: '/dashboard/athlete/connections'
+      preLoaderRoute: typeof DashboardAthleteConnectionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -348,6 +369,7 @@ const rootRouteChildren: RootRouteChildren = {
   DashboardAthleteProfileRoute: DashboardAthleteProfileRoute,
   DashboardAthleteReachRoute: DashboardAthleteReachRoute,
   DashboardAthleteResultsRoute: DashboardAthleteResultsRoute,
+  DashboardAthleteConnectionsRoute: DashboardAthleteConnectionsRoute,
   DashboardSponsorAthletesRoute: DashboardSponsorAthletesRoute,
   DashboardSponsorDiscoverRoute: DashboardSponsorDiscoverRoute,
   DashboardAdminIndexRoute: DashboardAdminIndexRoute,

@@ -1,14 +1,15 @@
-import { createFileRoute } from "@tanstack/react-router"
+import { createFileRoute, Link } from "@tanstack/react-router"
 import { useState } from "react"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useSession } from "#/lib/auth-client"
 import { getAthleteByUserId } from "#/lib/server/athletes"
 import { upsertReachSnapshot, getReachHistory } from "#/lib/server/reach"
+import { getSocialConnections, syncAllMetrics } from "#/lib/server/connections"
 import { StatCell } from "#/components/StatCell"
 import { Button } from "#/components/ui/button"
 import { Input } from "#/components/ui/input"
 import { Label } from "#/components/ui/label"
-import { Save } from "lucide-react"
+import { Save, RefreshCw, Link as LinkIcon } from "lucide-react"
 
 export const Route = createFileRoute("/dashboard/athlete/reach")({
   component: ReachPage,
@@ -37,6 +38,19 @@ function ReachPage() {
     queryKey: ["reach-history", athlete?.id],
     queryFn: () => getReachHistory({ data: { athleteId: athlete!.id, limit: 3 } }),
     enabled: !!athlete?.id,
+  })
+
+  const { data: connections = [] } = useQuery({
+    queryKey: ["social-connections", athlete?.id],
+    queryFn: () => getSocialConnections({ data: { athleteId: athlete!.id } }),
+    enabled: !!athlete?.id,
+  })
+
+  const hasConnections = connections.length > 0
+
+  const syncMutation = useMutation({
+    mutationFn: () => syncAllMetrics({ data: { athleteId: athlete!.id } }),
+    onSuccess: () => qc.invalidateQueries({ queryKey: ["reach-history"] }),
   })
 
   const latest = history[0]
@@ -79,9 +93,29 @@ function ReachPage() {
 
   return (
     <main className="page-wrap py-8">
-      <h1 className="font-display font-black text-4xl text-[#F0F0F2] mb-2">ALCANCE</h1>
+      <div className="flex items-center justify-between mb-2">
+        <h1 className="font-display font-black text-4xl text-[#F0F0F2]">ALCANCE</h1>
+        {hasConnections ? (
+          <Button
+            className="gap-2"
+            disabled={syncMutation.isPending}
+            onClick={() => syncMutation.mutate()}
+          >
+            <RefreshCw className={`w-4 h-4 ${syncMutation.isPending ? "animate-spin" : ""}`} />
+            {syncMutation.isPending ? "A sincronizar..." : "Sincronizar APIs"}
+          </Button>
+        ) : (
+          <Link to="/dashboard/athlete/connections" className="no-underline">
+            <Button variant="secondary" size="sm" className="gap-2">
+              <LinkIcon className="w-3.5 h-3.5" /> Ligar Contas
+            </Button>
+          </Link>
+        )}
+      </div>
       <p className="text-[#7a7a88] text-sm mb-8">
-        Atualiza as tuas métricas de redes sociais mensalmente.
+        {hasConnections
+          ? "Sincroniza as tuas métricas das redes sociais ou atualiza manualmente."
+          : "Liga as tuas contas para importar métricas automaticamente, ou atualiza manualmente."}
       </p>
 
       {latest && (

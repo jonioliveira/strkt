@@ -270,3 +270,37 @@ export const sponsorshipEventRelations = relations(sponsorshipEvents, ({ one }) 
     references: [athleteResults.id],
   }),
 }))
+
+// ── Social connections ─────────────────────────────────────────────────────────
+
+export const socialPlatformEnum = pgEnum("social_platform", ["youtube", "meta"])
+
+export const athleteSocialConnections = pgTable(
+  "athlete_social_connections",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    athleteId: uuid("athlete_id")
+      .notNull()
+      .references(() => athletes.id, { onDelete: "cascade" }),
+    platform: socialPlatformEnum("platform").notNull(),
+    platformUserId: text("platform_user_id"),
+    accessToken: text("access_token").notNull(),
+    refreshToken: text("refresh_token"),
+    tokenExpiresAt: timestamp("token_expires_at"),
+    scopes: text("scopes"),
+    connectedAt: timestamp("connected_at").notNull().defaultNow(),
+    lastSyncedAt: timestamp("last_synced_at"),
+  },
+  (t) => [unique().on(t.athleteId, t.platform)],
+)
+
+export const athleteSocialConnectionRelations = relations(athleteSocialConnections, ({ one }) => ({
+  athlete: one(athletes, {
+    fields: [athleteSocialConnections.athleteId],
+    references: [athletes.id],
+  }),
+}))
+
+export const athleteSocialConnectionsRelations = relations(athletes, ({ many }) => ({
+  socialConnections: many(athleteSocialConnections),
+}))

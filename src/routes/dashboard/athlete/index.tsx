@@ -11,7 +11,7 @@ import { ExposureBar } from "#/components/ExposureBar"
 import { ResultItem } from "#/components/ResultItem"
 import { SponsorTierBadge } from "#/components/SponsorTierBadge"
 import { Button } from "#/components/ui/button"
-import { Plus, Settings, TrendingUp, Activity, Bell, Award } from "lucide-react"
+import { Plus, Settings, TrendingUp, Activity, Bell, Award, Link as LinkIcon } from "lucide-react"
 
 export const Route = createFileRoute("/dashboard/athlete/")({
   component: AthleteDashboard,
@@ -116,10 +116,11 @@ function AthleteDashboard() {
           </div>
 
           {/* Quick nav */}
-          <div className="grid grid-cols-3 gap-3 mb-8">
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-8">
             {[
               { label: "Resultados", href: "/dashboard/athlete/results", icon: <TrendingUp className="w-4 h-4" /> },
               { label: "Alcance", href: "/dashboard/athlete/reach", icon: <Activity className="w-4 h-4" /> },
+              { label: "Conexões", href: "/dashboard/athlete/connections", icon: <LinkIcon className="w-4 h-4" /> },
               { label: "Perfil", href: "/dashboard/athlete/profile", icon: <Settings className="w-4 h-4" /> },
             ].map((item) => (
               <Link key={item.label} to={item.href} className="no-underline">
